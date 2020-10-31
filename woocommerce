@@ -1,0 +1,12 @@
+// WooCommerce Produktseite für ausgeblendete Produkte deaktivieren
+add_action('wp', function () {
+    global $post;
+    if (is_product()) {
+        $product = wc_get_product($post->ID);
+        if ($product->catalog_visibility === 'hidden') {
+            global $wp_query;
+            $wp_query->set_404();
+            status_header(404);
+        }
+    }
+});
